@@ -1,11 +1,25 @@
+import {StaticticsLine} from "./StaticticsLine";
+
 export const Statistics = ({good, neutral, bad}) => {
+    const all = good + neutral + Math.abs(bad);
     return (
         <>
             <h1>statistics</h1>
-            <span>good {good}</span>
-            <span>neutral {neutral}</span>
-            <span>bad {bad}</span>
-            <span>total {good+neutral+Math.abs(bad)}</span>
+            {all !== 0 ? (
+                <table>
+                    <tbody>
+                    <StaticticsLine name="good" value={good}/>
+                    <StaticticsLine name="neutral" value={neutral}/>
+                    <StaticticsLine name="bad" value={bad}/>
+                    <StaticticsLine name="all" value={good + neutral + Math.abs(bad)}/>
+                    <StaticticsLine name="average" value={(good + neutral + bad) / all}/>
+                    <StaticticsLine name="positive" value={((good * 100 )/ all) + " %"}/>
+                    </tbody>
+                </table>
+
+            ) : <div>No feedback given</div>
+            }
+
         </>
     );
 }
