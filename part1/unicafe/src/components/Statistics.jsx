@@ -12,7 +12,7 @@ export const Statistics = ({good, neutral, bad}) => {
                     <StaticticsLine name="neutral" value={neutral}/>
                     <StaticticsLine name="bad" value={bad}/>
                     <StaticticsLine name="all" value={good + neutral + Math.abs(bad)}/>
-                    <StaticticsLine name="average" value={(good + neutral + bad) / all}/>
+                    <StaticticsLine name="average" value={(good + bad) / all}/>
                     <StaticticsLine name="positive" value={((good * 100 )/ all) + " %"}/>
                     </tbody>
                 </table>
