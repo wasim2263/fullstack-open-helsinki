@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button} from "./components/Buttons";
 
 const App = () => {
@@ -12,21 +12,37 @@ const App = () => {
         'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
         'The only way to go fast, is to go well.'
     ]
-
+    const anecdeotesLength = anecdotes.length;
     const [selected, setSelected] = useState(0)
+    const [votes, setVotes] = useState([])
+    useEffect(() => {
+        const initiateVotes = Array(anecdeotesLength).fill(0)
+        setVotes(initiateVotes);
+        const selected = Math.floor(Math.random() * anecdeotesLength);
+        // console.log(selected)
+        setSelected(selected)
+    }, [])
     const getNextAnecdotes = () => {
-      const anecdeotesLength = anecdotes.length;
-      const selected = Math.floor(Math.random() * anecdeotesLength);
-        console.log(selected)
-      setSelected(selected)
+
+        const selected = Math.floor(Math.random() * anecdeotesLength);
+        // console.log(selected)
+        setSelected(selected)
+    }
+    const vote = () => {
+        let copyVotes = {...votes}
+        copyVotes[selected] += 1
+        setVotes(copyVotes)
     }
 
     return (
         <div>
             {anecdotes[selected]}
             <div>
-            <Button name='vote' handleOnclickFunction={getNextAnecdotes}/>
-            <Button name='next anecdotes' handleOnclickFunction={getNextAnecdotes}/>
+                has {(votes[selected])+""} votes
+            </div>
+            <div>
+                <Button name='vote' handleOnclickFunction={vote}/>
+                <Button name='next anecdotes' handleOnclickFunction={getNextAnecdotes}/>
             </div>
         </div>
     );
