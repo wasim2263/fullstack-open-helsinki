@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Button} from "./components/Buttons";
+import {Anecdote} from "./components/Anecdote";
 
 const App = () => {
     const anecdotes = [
@@ -14,6 +15,7 @@ const App = () => {
     ]
     const anecdeotesLength = anecdotes.length;
     const [selected, setSelected] = useState(0)
+    const [maxVoted, setMaxVoted] = useState(null)
     const [votes, setVotes] = useState([])
     useEffect(() => {
         const initiateVotes = Array(anecdeotesLength).fill(0)
@@ -31,18 +33,31 @@ const App = () => {
     const vote = () => {
         let copyVotes = {...votes}
         copyVotes[selected] += 1
-        setVotes(copyVotes)
+
+        setVotes(copyVotes);
+        console.log(copyVotes);
+        const maxVoteIndex = Object.keys(copyVotes).reduce((previousValue, currentValue) => copyVotes[previousValue] < copyVotes[currentValue] ? currentValue : previousValue)
+        // console.log(copyVotes, maxVote);
+        // const indexOfMaxVote = copyVotes.indexOf(maxVote)
+        setMaxVoted(maxVoteIndex)
     }
 
     return (
         <div>
-            {anecdotes[selected]}
             <div>
-                has {(votes[selected])+""} votes
+                <h1>Anecdote of the day</h1>
+                <Anecdote anecdote={anecdotes[selected]} vote={votes[selected]}/>
             </div>
             <div>
                 <Button name='vote' handleOnclickFunction={vote}/>
                 <Button name='next anecdotes' handleOnclickFunction={getNextAnecdotes}/>
+            </div>
+            <div>
+                <h1>Anecdote with most votes</h1>
+                {
+                    maxVoted != null ? <Anecdote anecdote={anecdotes[maxVoted]} vote={votes[maxVoted]}/> : "None"
+
+                }
             </div>
         </div>
     );
