@@ -2,7 +2,7 @@ import {Header} from "./components/Header";
 import {Content} from "./components/Content";
 import {Total} from "./components/Total";
 
-function App() {
+const App =()=> {
     const course = {
         name: 'Half Stack application development',
         parts: [
